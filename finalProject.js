@@ -3,7 +3,7 @@ var promise = d3.csv("Data.csv");
 promise.then(function(data)
 
 {
-  console.log(data)
+  console.log(data.columns)
     setup(data)
 }),
 
@@ -12,8 +12,8 @@ promise.then(function(data)
     return ("error", Error)
 }
 
-var screen = {width:600, height:750}
-var margins = {top:10, right:50, bottom:50, left:50}
+var screen = {width:700, height:750}
+var margins = {top:30, right:80, bottom:50, left:85}
 
 var setup = function(data)
 {
@@ -23,31 +23,6 @@ var setup = function(data)
     .append("g")
     .attr("id", "graph")
     .attr("transform", "translate("+margins.left+", "+margins.top+")");
-    
-/* var x = d3.scaleLinear().domain([1,8]).range([0,width]);
-    .selectAll("svg")
-    .append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x));
-    
-var y = d3. scaleLinear().domain([1,8]).range([height, 0]);
-    .select("svg")
-    .append("g")
-    .call(d3.axisLeft(y));
-    
-svg.append("text")
-        .attr("text-anchor", "end")
-        .attr("x", width)
-        .attr("y", height + margin.top + 20)
-        .text("Years");
-    
-svg.append("text")
-        .attr("text-anchor", "end")
-        .attr("transform", "rotate(-90)")
-        .attr("y", -margin.left+20)
-        .attr("x", -margin.top)
-        .text("Percentage") */
-    
 
     
 var width = screen.width - margins.left - margins.right;
@@ -64,6 +39,20 @@ var yScale = d3.scaleLinear()
 var xAxis = d3.axisBottom(xScale)
 var yAxis = d3.axisLeft(yScale)
 var cScale = d3.scaleOrdinal(d3.schemeTableau10)
+
+var svg = d3.select("svg")
+    .append("svg")
+    .attr("width", screen.width)
+    .attr("height", screen.height)
+    .attr("id", "graph")
+    .attr("transform", "translate("+margins.left+", "+margins.top+")");
+    
+    
+svg.append("text")
+    .attr("transform", "translate("+ (width/2)+", "+(margins.top+ height + 50)+")")
+    .style("text-anchor", "middle")
+    .text("Year")
+    
 d3.select("svg")
     .append("g")
     .attr("class", "axis");
@@ -73,6 +62,24 @@ d3.select(".axis")
     .attr("id", "xAxis")
     .attr("transform", "translate("+margins.left+", "+(margins.top+height)+")")
     .call(xAxis)
+    
+svg.append("svg")
+     .attr("width", screen.width)
+    .attr("height", screen.height)
+    .attr("id", "graph")
+    
+    
+svg.append("text")
+    .attr("transform", "rotate(-90)")
+    .attr("y", (margins.left-50))
+    .attr("x", 0- (height/2))
+    .attr("dy", "1em")
+    .style("text-anchor", "middle")
+    .text("Trout Percent Better Than Griffey")
+    
+d3.select("svg")
+    .append("g")
+    .attr("class", "axis");
     
 d3.select(".axis")
     .append("g")
@@ -86,11 +93,96 @@ d3.select(".axis")
     drawLine(data, xScale, yScale, cScale, "SP")
     drawLine(data, xScale, yScale, cScale, "WAR")
     
+d3.select(".OWAR")
+    .on("click", function()
+{
+    d3.selectAll("#graph")
+    .selectAll("g")
+    .remove()
+    
+    drawLine(data, xScale, yScale, cScale, "OWAR")
+})
+    
+d3.select(".AOPS")
+    .on("click", function()
+{
+    d3.selectAll("#graph")
+    .selectAll("g")
+    .remove()
+    
+    drawLine(data, xScale, yScale, cScale, "AOPS")
+})
+
+d3.select(".OBP")
+    .on("click", function()
+{
+    d3.selectAll("#graph")
+    .selectAll("g")
+    .remove()
+    
+    drawLine(data, xScale, yScale, cScale, "OBP")
+})
+
+d3.select(".SP")
+    .on("click", function()
+{
+    d3.selectAll("#graph")
+    .selectAll("g")
+    .remove()
+    
+    drawLine(data, xScale, yScale, cScale, "SP")
+})
+
+d3.select(".WAR")
+    .on("click", function()
+{
+    d3.selectAll("#graph")
+    .selectAll("g")
+    .remove()
+    
+    drawLine(data, xScale, yScale, cScale, "OWAR")
+})
+
+var columns = 
+    ["OWAR","AOPS","OBP","SP","WAR"]
+    drawLegend(columns, cScale)
+    
 }
 
+var drawLegend = function(data, cScale)
+{
+    d3.select("svg")
+        .append("g")
+        .attr("id", "legend")
+        .attr("transform", "translate("+(screen.width-margins.right - 25)+", "+(margins.top)+")");
+      console.log("data", data)       
+var gs = d3.select("#legend")
+.selectAll("g")
+.data(data)
+.enter()
+.append("g")
+.attr("transform", function(arr,i)
+{
+    return "translate(0, "+(i*14)+")";
+})
+    
+gs.append("rect").attr("width", 35).attr("height", 10).attr("fill", function(arr,i)
+{
+    return cScale(data[i]);
+
+});
+    
+    
+gs.append("text")
+    .text(function(arr, i){return data[i]})
+    .attr("x", 40)
+    .attr("y", 10)
+    .attr("fill", "black")
+    
+}
 var drawLine= function(data, xScale, yScale, cScale, dimension)
 {
-   
+   //console.log(dimension)
 var arrays = d3.select("#graph")
     // .selectALL("#graph)
     // .data(data)
@@ -102,7 +194,7 @@ var arrays = d3.select("#graph")
     .on("mouseover", function(data)
         {
         d3.select(this)
-        .attr("stroke", "black")
+        .attr("stroke", "gold")
         .attr("stroke-width", "8")
         .raise(this);
     })
