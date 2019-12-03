@@ -87,10 +87,10 @@ d3.select(".axis")
     .attr("transform", "translate("+margins.left+", "+ margins.top +")")
     .call(yAxis)
     
-    drawLine(data, xScale, yScale, cScale, "OWAR")
-    drawLine(data, xScale, yScale, cScale, "AOPS")
-    drawLine(data, xScale, yScale, cScale, "OBP")
-    drawLine(data, xScale, yScale, cScale, "SP")
+    drawLine(data, xScale, yScale, cScale, "Offensive WAR")
+    drawLine(data, xScale, yScale, cScale, "Adjusted OPS")
+    drawLine(data, xScale, yScale, cScale, "On Base Percentage")
+    drawLine(data, xScale, yScale, cScale, "Slugging Percentage")
     drawLine(data, xScale, yScale, cScale, "WAR")
     
 d3.select(".OWAR")
@@ -104,6 +104,7 @@ d3.select(".OWAR")
 })
     
 d3.select(".AOPS")
+    .text("Adjusted OPS")
     .on("click", function()
 {
     d3.selectAll("#graph")
@@ -140,44 +141,44 @@ d3.select(".WAR")
     .selectAll("g")
     .remove()
     
-    drawLine(data, xScale, yScale, cScale, "OWAR")
+    drawLine(data, xScale, yScale, cScale, "WAR")
 })
 
-var columns = 
-    ["OWAR","AOPS","OBP","SP","WAR"]
+
     drawLegend(columns, cScale)
     
 }
-
-var drawLegend = function(data, cScale)
+var columns = 
+    ["Offensive WAR","Adjusted OPS","On Base Percentage","Slugging Percentage","WAR"]
+var drawLegend = function(columns, cScale)
 {
     d3.select("svg")
         .append("g")
         .attr("id", "legend")
         .attr("transform", "translate("+(screen.width-margins.right - 25)+", "+(margins.top)+")");
-      console.log("data", data)       
+      //console.log("data", data)       
 var gs = d3.select("#legend")
 .selectAll("g")
-.data(data)
+.data(columns)
 .enter()
 .append("g")
-.attr("transform", function(arr,i)
+.attr("transform", function(columns,i)
 {
     return "translate(0, "+(i*14)+")";
 })
     
-gs.append("rect").attr("width", 35).attr("height", 10).attr("fill", function(arr,i)
+gs.append("rect").attr("width", 35).attr("height", 10).attr("fill", function(columns)
 {
-    return cScale(data[i]);
+    return cScale(columns);
 
-});
+})
     
     
 gs.append("text")
-    .text(function(arr, i){return data[i]})
+    .text(function(d){return d})
     .attr("x", 40)
     .attr("y", 10)
-    .attr("fill", "black")
+    //.attr("fill", "black")
     
 }
 var drawLine= function(data, xScale, yScale, cScale, dimension)
