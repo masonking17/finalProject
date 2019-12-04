@@ -67,7 +67,7 @@ svg.append("svg")
     .attr("height", screen.height)
     .attr("id", "graph")
     
-    
+
 svg.append("text")
     .attr("transform", "rotate(-90)")
     .attr("y", (margins.left-50))
