@@ -12,7 +12,7 @@ promise.then(function(data)
     return ("error", Error)
 }
 
-var screen = {width:700, height:750}
+var screen = {width:800, height:750}
 var margins = {top:30, right:80, bottom:50, left:85}
 
 var setup = function(data)
@@ -46,7 +46,6 @@ var svg = d3.select("svg")
     .attr("height", screen.height)
     .attr("id", "graph")
     .attr("transform", "translate("+margins.left+", "+margins.top+")");
-    
     
 svg.append("text")
     .attr("transform", "translate("+ (width/2)+", "+(margins.top+ height + 50)+")")
@@ -87,10 +86,10 @@ d3.select(".axis")
     .attr("transform", "translate("+margins.left+", "+ margins.top +")")
     .call(yAxis)
     
-    drawLine(data, xScale, yScale, cScale, "Offensive WAR")
-    drawLine(data, xScale, yScale, cScale, "Adjusted OPS")
-    drawLine(data, xScale, yScale, cScale, "On Base Percentage")
-    drawLine(data, xScale, yScale, cScale, "Slugging Percentage")
+    drawLine(data, xScale, yScale, cScale, "OWAR")
+    drawLine(data, xScale, yScale, cScale, "AOPS")
+    drawLine(data, xScale, yScale, cScale, "OBP")
+    drawLine(data, xScale, yScale, cScale, "SP")
     drawLine(data, xScale, yScale, cScale, "WAR")
     
 d3.select(".OWAR")
@@ -149,13 +148,13 @@ d3.select(".WAR")
     
 }
 var columns = 
-    ["Offensive WAR","Adjusted OPS","On Base Percentage","Slugging Percentage","WAR"]
+    ["OWAR","AOPS","OBP","SP","WAR"]
 var drawLegend = function(columns, cScale)
 {
     d3.select("svg")
         .append("g")
         .attr("id", "legend")
-        .attr("transform", "translate("+(screen.width-margins.right - 100)+", "+(margins.top)+")");
+        .attr("transform", "translate("+(screen.width-margins.right - 10)+", "+(margins.top)+")");
       //console.log("data", data)       
 var gs = d3.select("#legend")
 .selectAll("g")
