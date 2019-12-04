@@ -155,7 +155,7 @@ var drawLegend = function(columns, cScale)
     d3.select("svg")
         .append("g")
         .attr("id", "legend")
-        .attr("transform", "translate("+(screen.width-margins.right - 25)+", "+(margins.top)+")");
+        .attr("transform", "translate("+(screen.width-margins.right - 100)+", "+(margins.top)+")");
       //console.log("data", data)       
 var gs = d3.select("#legend")
 .selectAll("g")
