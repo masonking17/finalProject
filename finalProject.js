@@ -13,7 +13,7 @@ promise.then(function(data)
 }
 
 var screen = {width:800, height:750}
-var margins = {top:30, right:80, bottom:50, left:85}
+var margins = {top:30, right:140, bottom:50, left:85}
 
 var setup = function(data)
 {
@@ -85,12 +85,16 @@ d3.select(".axis")
     .attr("id", "yAxis")
     .attr("transform", "translate("+margins.left+", "+ margins.top +")")
     .call(yAxis)
+
     
-    drawLine(data, xScale, yScale, cScale, "OWAR")
-    drawLine(data, xScale, yScale, cScale, "AOPS")
-    drawLine(data, xScale, yScale, cScale, "OBP")
-    drawLine(data, xScale, yScale, cScale, "SP")
-    drawLine(data, xScale, yScale, cScale, "WAR")
+
+drawLine(data, xScale, yScale, cScale, "OWAR")
+drawLine(data, xScale, yScale, cScale, "AOPS")
+drawLine(data, xScale, yScale, cScale, "OBP")
+drawLine(data, xScale, yScale, cScale, "SP")
+drawLine(data, xScale, yScale, cScale, "WAR")
+
+   
     
 d3.select(".OWAR")
     .on("click", function()
@@ -100,8 +104,11 @@ d3.select(".OWAR")
     .remove()
     
     drawLine(data, xScale, yScale, cScale, "OWAR")
+    drawplots(data, xScale, yScale, cScale, "OWAR")
+   
 })
     
+
 d3.select(".AOPS")
     .text("Adjusted OPS")
     .on("click", function()
@@ -111,6 +118,7 @@ d3.select(".AOPS")
     .remove()
     
     drawLine(data, xScale, yScale, cScale, "AOPS")
+    drawplots(data, xScale, yScale, cScale, "AOPS")
 })
 
 d3.select(".OBP")
@@ -121,6 +129,7 @@ d3.select(".OBP")
     .remove()
     
     drawLine(data, xScale, yScale, cScale, "OBP")
+    drawplots(data, xScale, yScale, cScale, "OBP")
 })
 
 d3.select(".SP")
@@ -131,6 +140,8 @@ d3.select(".SP")
     .remove()
     
     drawLine(data, xScale, yScale, cScale, "SP")
+    drawplots(data, xScale, yScale, cScale, "SP")
+   
 })
 
 d3.select(".WAR")
@@ -141,11 +152,31 @@ d3.select(".WAR")
     .remove()
     
     drawLine(data, xScale, yScale, cScale, "WAR")
+    drawplots(data, xScale, yScale, cScale, "WAR")
 })
-
-
     drawLegend(columns, cScale)
+   
+d3.select("#graph")
+    .selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+     .on("mouseover", function(num, dimension) 
+        {
+                var label = "(" + num.Years + "," + num.SP + ")";
+                d3.select("#tooltip")
+                .text(label)
+                .style("left", (d3.event.pageX + 20) + "px")
+                .style("top", (d3.event.pageY - 20) + "px")
+                .classed("hidden", "false");
+         })
+        .on("mouseout", function()
+        {
+            d3.select("#tooltip")
+              .classed("hidden", true)
+        });
     
+ 
 }
 var columns = 
     ["OWAR","AOPS","OBP","SP","WAR"]
@@ -191,26 +222,38 @@ var arrays = d3.select("#graph")
     .attr("fill", "none")
     .attr("stroke", cScale(dimension))
     .attr("stroke-width", 4)
-    .on("mouseover", function(data)
-        {
-        d3.select(this)
-        .attr("stroke", "gold")
-        .attr("stroke-width", "8")
-        .raise(this);
-    })
-    .on("mouseout", function(data)
-        {
-        d3.select(this)
-        .attr("stroke", cScale(dimension))
-        .attr("stroke-width", 4)
-    })
     
 var lineGenerator= d3.line()
         .x(function(num) { return xScale(num.Years);})
         .y(function(num) { return yScale(num[dimension]);})
         // .curve(d3.curveMonotoneX)
 
+
+
 arrays.append("path") 
     .datum(data)
     .attr("d", lineGenerator)
+}
+
+var drawplots = function(data, xScale, yScale, cScale, dimension)
+{
+    d3.select("#graph")
+    .selectAll("circle")
+    .data(data)
+    .transition()
+    .duration(1500)
+    .attr("fill", function(trash)
+    {
+        return cScale(dimension)
+    })
+    .attr("cx", function(num)
+          {
+        return xScale(num.Years)
+    })
+    .attr("cy", function(num)
+         {
+        return yScale(num[dimension])
+    })
+    .attr("r", 6)
+   
 }

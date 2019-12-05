@@ -1,28 +1,17 @@
-#tooltip{
+#tooltip
+{
     position: absolute;
-    display: inline-block;
-    width: 250px;
-    height: auto;
-    padding: 15px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 4px 4px 10px rgba(0,0,0,0.4);
     background-color: white;
-    -webkit-border-radius: 10px;
-    -moz-border-radius: 10px;
-    border-radius;
-    -webkit-box-shadow: 5px 5px 10px rgba (0,0,0,0.5);
-    -moz-boz-shadow: 5px 5px 10px rgba (0,0,0,0.5);
-    box-shadow: 5px 5px 10px rgba (0,0,0,0.5);
     pointer-events:none;
-}
-
-#tooltip.hidden{
-    display:none;
-}
-
-#tooltip p{
-    margin:0;
+    
     font-family: sans-serif;
     font-size: 16px;
-    line-height: 20px;
+    
 }
 
-</style>
+
+
+
