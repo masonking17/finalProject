@@ -13,5 +13,62 @@
 }
 
 
+svg
+{
+    background-color:white;
+    height: 800px;
+    width: 1000px;
+    border-style: solid;
+    border: 30px solid darkgrey;
+    padding: 30px;
+    
+    
+}
 
+body {
+    background-color: darkolivegreen ;
+}
 
+h1 {
+    
+    left: 18%;
+    top: 5%;
+    border-style: double;
+    height: 40px;
+    width: 500px;
+    background-color: black;
+    color: white;
+    
+}
+
+button {
+    border-style: double;
+    height: 50px;
+    width: 150p;
+    font-size: 24px;
+}
+
+button.OWAR {
+    color: white;
+    background-color: navy;
+}
+
+button.AOPS {
+    color: white;
+    background-color: darkorange;
+}
+
+button.OBP {
+    color: white;
+    background-color: indianred;
+}
+
+button.SP {
+    color: white;
+    background-color: teal;
+}
+
+button.WAR {
+    color: white;
+    background-color: darkgreen;
+}

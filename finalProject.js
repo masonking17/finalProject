@@ -161,20 +161,7 @@ d3.select("#graph")
     .data(data)
     .enter()
     .append("circle")
-     .on("mouseover", function(num, dimension) 
-        {
-                var label = "(" + num.Years + "," + num.OWAR + ")";
-                d3.select("#tooltip")
-                .text(label)
-                .style("left", (d3.event.pageX + 20) + "px")
-                .style("top", (d3.event.pageY - 20) + "px")
-                .classed("hidden", "false");
-         })
-        .on("mouseout", function()
-        {
-            d3.select("#tooltip")
-              .classed("hidden", true)
-        });
+    
     
 }
 var columns = 
