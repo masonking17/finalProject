@@ -163,7 +163,7 @@ d3.select("#graph")
     .append("circle")
      .on("mouseover", function(num, dimension) 
         {
-                var label = "(" + num.Years + "," + num.SP + ")";
+                var label = "(" + num.Years + "," + num.OWAR + ")";
                 d3.select("#tooltip")
                 .text(label)
                 .style("left", (d3.event.pageX + 20) + "px")
@@ -176,7 +176,6 @@ d3.select("#graph")
               .classed("hidden", true)
         });
     
- 
 }
 var columns = 
     ["OWAR","AOPS","OBP","SP","WAR"]
